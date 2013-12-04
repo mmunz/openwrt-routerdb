@@ -1,0 +1,12 @@
+{{extend 'layout.html'}}
+
+<table class="table">
+  <tr>
+    <td>{{=T('Platform')}}</td>
+    <td>{{=A(item.id_manufacturer.name, _href=URL('manufacturer', item.id_manufacturer.slug))}}</td>
+  </tr>
+  <tr><td>{{=T('Model')}}</td><td>{{=item.model}}</td></tr>
+  <tr><td>{{=T('Rev')}}</td><td>{{=item.rev}}</td></tr>
+</table>
+
+

@@ -1,0 +1,14 @@
+{{extend 'layout.html'}}
+
+<table class="table">
+  <tr>
+    <td>{{=T('Release')}}</td>
+    <td>{{=item.name}}</td>
+  </tr>
+  <tr><td>{{=T('Release date')}}</td><td>{{=item.released}}</td></tr>
+  <tr><td>{{=T('Revision')}}</td><td>{{=item.rev}}</td></tr>
+  <tr><td>{{=T('Release notes')}}</td><td>{{=A(item.releasenotes, _href=item.releasenotes)}}</td></tr>
+  <tr><td>{{=T('Download URL')}}</td><td>{{=A(item.downloadurl, _href=item.downloadurl)}}</td></tr>
+</table>
+
+

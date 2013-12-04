@@ -1,0 +1,31 @@
+{{extend 'layout.html'}}
+
+<table class="table">
+  <tr>
+    <td>{{=T('Manufacturer')}}</td>
+    <td>{{=A(item.id_manufacturer.name, _href=URL('manufacturer', item.id_manufacturer.slug))}}</td>
+  </tr>
+  <tr>
+    <td>{{=T('Model')}}</td>
+    <td>
+      {{=item.model}}
+      {{if item.rev:}}
+        {{=item.rev}}
+      {{pass}}
+    </td>
+  </tr>
+  <tr><td>{{=T('Speed')}}</td><td>{{=item.speed}} {{=T('MHz')}}</td></tr>
+  <tr>
+    <td>{{=T('Architecture')}}</td>
+    <td>
+      {{if item.id_architecture.rev:}}
+          {{=A(item.id_architecture.arch + ' ' + item.id_architecture.rev, _href=URL('architecture', item.id_architecture.slug))}}
+      {{else:}}
+          {{=A(item.id_architecture.arch, _href=URL('architecture', item.id_architecture.slug))}}
+      {{pass}}
+    </td>
+  </tr>
+
+</table>
+
+

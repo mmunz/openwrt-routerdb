@@ -1,0 +1,11 @@
+{{extend 'layout.html'}}
+
+<table class="table">
+  <tr>
+    <td>{{=T('Architecture')}}</td>
+    <td>{{=item.arch}}</td>
+  </tr>
+  <tr><td>{{=T('Version')}}</td><td>{{=item.rev or '-'}}</td></tr>
+</table>
+
+

@@ -1,0 +1,14 @@
+{{right_sidebar_enabled=True}}
+{{extend 'layout.html'}}
+
+
+
+{{block right_sidebar}}
+{{=A(IMG(_src=URL(request.application, 'static/images', 'openwrt-logo.png'),
+                  _alt="OpenWrt Wireless Freedom",
+                  _title="OpenWrt Wireless Freedom"),
+      _href=URL("http://www.openwrt.org"))}}
+{{end}}
+
+
+{{=content}}

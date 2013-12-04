@@ -1,0 +1,175 @@
+{{extend 'layout.html'}}
+
+<div class="row-fluid">
+  <div class="span8">
+    <table class="table">
+      <tr><td>Manufacturer</td><td>{{=A(item.manufacturer, _href=URL('manufacturer', item.id_manufacturer.slug))}}</td></tr>
+      <tr><td>Model</td><td>{{=item.model}}</td></tr>
+      <tr><td>Version</td><td>{{=item.rev}}</td></tr>
+    </table>
+  </div>
+
+  <div class="span4" style="padding-left: 2em;">
+    {{if item.thumbnail:}}
+    {{=A(XML('<img src="%s">' % URL('download',args=item.thumbnail)), _href=URL('download',args=item.image))}}
+    {{pass}}
+  </div>
+</div>
+
+
+
+<h2>{{=T('Specifications')}}</h2>
+
+<table class="table">
+  <tr><td>Platform</td><td>{{=item.id_platform and A(item.id_platform.model, 
+                              _href=URL('platform', item.id_platform.slug)) or '-'}}</td><td></td></tr>
+  <tr>
+    <td>CPU</td>
+    <td>
+      {{for c in item.id_cpu:}}
+        {{=c.speed or '-'}} {{=T('MHz')}}
+      {{pass}}
+    </td>
+    <td>
+      {{for c in item.id_cpu:}}
+        {{=A(c.model + ' ' + c.rev or '', _href=URL('cpu', c.slug))}}
+      {{pass}}
+    </td>
+  </tr>
+  <tr>
+    <td>RAM</td>
+    <td>
+      {{=item.ramsize}} MB
+    </td>
+    <td>
+      {{for r in ram:}}
+        {{=r['count']}} x {{=A(r['formatted'], _href=URL('ram', r['slug']))}}
+      {{pass}}
+    </td>
+  </tr>
+  <tr>
+    <td>{{=T('Flash')}}</td>
+    <td>{{=item.flashsize}} MB</td>
+    <td>
+      {{for r in item.id_flash:}}
+        {{=A(r.id_manufacturer.name + ' ' + r.model, _href=URL('flash', r.slug))}}
+      {{pass}}
+    </td>
+  </tr>
+  <tr>
+    <td>{{=T('USB')}}</td>
+    <td>
+      {{for u in usbports:}}
+        {{=u}}
+      {{pass}}
+    </td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>{{=T('Serial')}}</td>
+    <td>
+      {{for s in serial:}}
+        {{=s['count']}} x {{=s['formatted']}}
+      {{pass}}
+    </td>
+    <td></td>
+  </tr>
+
+</table>
+
+
+{{if len(network) > 0:}}
+<h2>{{=T('Network Interfaces')}}</h2>
+<table class="table">
+  <tr>
+    <th>{{=T('Manufacturer')}}</th>
+    <th>{{=T('Ports')}}</th>
+    <th>{{=T('Speed (Mbps)')}}</th>
+    <th>{{=T('VLAN')}}</th>
+    <th>{{=T('Chipset')}}</th>
+  </tr>
+  {{for n in network:}}
+  <tr>
+    <td>{{=n['manufacturer']}}</td>
+    <td>{{=n['ports']}}</td>
+    <td>{{=n['speed']}}</td>
+    <td>{{=n['vlan']}}</td>
+    <td>{{=n['chipset']}}</td>
+    <td></td>
+  </tr>
+  {{pass}}
+</table>
+{{pass}}
+
+
+{{if len(wifi) > 0:}}
+<h2>{{=T('Wifi')}}</h2>
+<table class="table">
+  <tr>
+    <th>{{=T('Manufacturer')}}</th>
+    <th>{{=T('Chipset')}}</th>
+    <th>{{=T('Modes')}}</th>
+    <th>{{=T('VAP')}}</th>
+  </tr>
+  {{for w in wifi:}}
+  <tr>
+    <td>{{=w['manufacturer']}}</td>
+    <td>{{=w['chipset']}}</td>
+    <td>{{=w['modes']}}</td>
+    <td>{{=w['vap']}}</td>
+    <td></td>
+  </tr>
+  {{pass}}
+</table>
+{{pass}}
+
+
+{{if len(antennas) > 0:}}
+<h2>{{=T('Antennas/Connectors')}}</h2>
+<ol>
+{{for a in antennas:}}
+  <li>{{=a}}</li>
+{{pass}}
+</ol>
+{{pass}}
+
+
+{{if len(links) > 0:}}
+<h2>{{=T('Additional Links')}}</h2>
+<ul>
+{{for l in links:}}
+  <li>{{=l}}</li>
+{{pass}}
+</ul>
+{{pass}}
+
+<h2>{{=T('Firmware')}}</h2>
+
+<table class="table">
+{{for fw in firmware:}}
+  <tr>
+    <th>{{=T('Release')}}</th>
+    <th>{{=T('Target')}}</th>
+    <th>{{=T('Profile')}}</th>
+    <th>{{=T('Images')}}</th>
+  </tr>
+
+  <tr>
+    <td>{{=A(fw['release'], _href=URL('firmware', fw['release_slug']))}}</td>
+    <td>{{=fw['target']}}</td>
+    <td>{{=fw['profile']}}</td>
+    <td>
+      {{if fw['factory']:}}{{=A(fw['factory'], _href=fw['downloadurl']+fw['target']+"/"+fw['subtarget']+"/"+fw['factory'])}}<br />{{pass}}
+      {{if fw['sysupgrade']:}}{{=A(fw['sysupgrade'], _href=fw['downloadurl']+fw['target']+"/"+fw['subtarget']+"/"+fw['sysupgrade'])}}<br />{{pass}}
+    </td>
+  </tr>
+{{pass}}
+</table>
+
+
+<h2>{{=T('Meta')}}</h2>
+
+<table class="table">
+  <tr><td>{{=T('Added')}}</td><td>{{=item.created_on or '-'}} {{=T('by')}} {{=item.created_by and item.created_by.username or '-'}}</td></tr>
+  <tr><td>{{=T('Last edit')}}</td><td>{{=item.modified_on or '-'}} {{=T('by')}} {{=item.created_by and item.created_by.username or '-'}}</td></tr>
+</table>
